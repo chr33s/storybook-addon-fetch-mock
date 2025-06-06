@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-fetch-mock",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Adds fetch() mocking to Storybook.js using fetch-mock",
   "author": "John Albin Wilkins <virtually.johnalbin@gmail.com> (https://john.albin.net/)",
   "homepage": "https://github.com/JohnAlbin/storybook-addon-fetch-mock#readme",
@@ -62,18 +62,18 @@
     "ci:lint": "npm run lint && npm run prettier:check",
     "pretest": "npm run ci:lint",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "dependencies": {
     "fetch-mock": "^9.11.0"
   },
   "peerDependencies": {
-    "@storybook/preview-api": "^7.0.0 || ^8.0.0 || next"
+    "storybook": "^9.0.0"
   },
   "devDependencies": {
-    "@storybook/preview-api": "^8.0.0",
-    "@storybook/react": "^8.0.0",
+    "storybook": "^9.0.0",
+    "@storybook/react": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "eslint": "^8.57.0",
