@@ -1,9 +1,9 @@
-import {
+import type {
   MockMatcher,
   MockOptions,
   MockResponse,
   MockResponseFunction,
-} from 'fetch-mock/types';
+} from 'fetch-mock';
 
 interface MockObject {
   matcher: MockMatcher | MockOptions;

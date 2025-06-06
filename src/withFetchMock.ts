@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock';
+import fetchMock, { type CallLog } from 'fetch-mock';
 import { makeDecorator } from 'storybook/preview-api';
 import { PARAM_KEY } from './constants';
 import type { Mock, MockArray, MockObject } from './typings';
@@ -17,7 +17,7 @@ function addMocks(
     mocks.forEach((mock) => {
       // Mock defined as: [ matcher, response, options ]
       if (Array.isArray(mock)) {
-        fetchMock.mock(...(mock as MockArray));
+        fetchMock.route(...(mock as MockArray));
         return;
       }
 
@@ -25,7 +25,7 @@ function addMocks(
 
       // Mock defined as: { matcher, [response], [options] }
       if (matcher) {
-        fetchMock.mock(matcher, response, options);
+        fetchMock.route(matcher, response, options);
       }
     });
   } else if (mocks) {
@@ -44,11 +44,11 @@ export const withFetchMock = makeDecorator({
 
   wrapper(storyFn, context, { parameters = {} }) {
     // If requested, send debug info to the console.
-    if (fetchMock.called() && parameters.debug) {
+    if (fetchMock.callHistory.called() && parameters.debug) {
       // Construct an object that easy to navigate in the console.
-      const calls: { [key: string]: fetchMock.MockCall } = {};
-      fetchMock.calls().forEach((call) => {
-        calls[call.identifier] = call;
+      const calls: { [key: string]: CallLog } = {};
+      fetchMock.callHistory.calls().forEach((call) => {
+        calls[call.url] = call;
       });
 
       // Send the debug data to the console.
@@ -57,10 +57,10 @@ export const withFetchMock = makeDecorator({
 
     // Remove any mocks from fetch-mock that may have been defined by other
     // stories.
-    fetchMock.reset();
+    fetchMock.hardReset();
 
     // By default, allow any fetch call not mocked to use the actual network.
-    fetchMock.config.fallbackToNetwork = true;
+    fetchMock.spyGlobal();
 
     // Add all the mocks.
     addMocks(parameters.mocks);
@@ -77,12 +77,8 @@ export const withFetchMock = makeDecorator({
     // Add any catch-all urls last.
     if (Array.isArray(parameters.catchAllURLs)) {
       parameters.catchAllURLs.forEach((url) => {
-        fetchMock.mock(
-          {
-            // Add descriptive name for debugging.
-            name: `catchAllURLs[ ${url} ]`,
-            url: `begin:${url}`,
-          },
+        fetchMock.route(
+          `begin:${url}`,
           // Catch-all mocks will respond with 404 to make it easy to determine
           // one of the catch-all mocks was used.
           404,
