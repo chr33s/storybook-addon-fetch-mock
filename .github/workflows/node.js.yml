@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 24.x]
+        node-version: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -24,6 +24,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - name: install
-        run: npm ci
+        run: npm install --include=dev
       - name: lint
         run: npm run ci:lint
