@@ -47,8 +47,7 @@
   },
   "files": [
     "dist/",
-    "README.md",
-    "preview.js"
+    "README.md"
   ],
   "scripts": {
     "build": "tsup",
