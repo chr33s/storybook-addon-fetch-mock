@@ -60,7 +60,7 @@ export const withFetchMock = makeDecorator({
     fetchMock.hardReset();
 
     // By default, allow any fetch call not mocked to use the actual network.
-    fetchMock.spyGlobal();
+    fetchMock.spy();
 
     // Add all the mocks.
     addMocks(parameters.mocks);
