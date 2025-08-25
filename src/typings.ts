@@ -1,8 +1,4 @@
-import type {
-  RouteMatcher,
-  RouteResponse,
-  UserRouteConfig,
-} from 'fetch-mock';
+import type { RouteMatcher, RouteResponse, UserRouteConfig } from 'fetch-mock';
 
 export interface MockObject {
   matcher: RouteMatcher;
@@ -10,18 +6,14 @@ export interface MockObject {
   options?: UserRouteConfig;
 }
 
-export type MockArray = [
-  RouteMatcher,
-  RouteResponse?,
-  UserRouteConfig?,
-];
+export type MockArray = [RouteMatcher, RouteResponse?, UserRouteConfig?];
 
 export type Mock = MockObject | MockArray;
 
-export type WithFetchMockParameters = {
+export interface WithFetchMockParameters {
   parameters: {
     fetchMock: {
-      mocks: MockObject[]
-    }
-  }
+      mocks: MockObject[];
+    };
+  };
 }
