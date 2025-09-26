@@ -24,24 +24,12 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./preview": {
-      "import": {
-        "types": "./dist/preview.d.ts",
-        "default": "./dist/preview.js"
-      },
-      "require": {
-        "types": "./dist/preview.d.cts",
-        "default": "./dist/preview.cjs"
-      }
+      "types": "./dist/preview.d.ts",
+      "default": "./dist/preview.js"
     },
     "./package.json": "./package.json"
   },
@@ -68,7 +56,7 @@
     "fetch-mock": "12.5.4"
   },
   "peerDependencies": {
-    "storybook": "~9.0.0"
+    "storybook": "^9.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "1.4.0",
