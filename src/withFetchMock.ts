@@ -60,23 +60,33 @@ export const withFetchMock = makeDecorator({
     fetchMock.hardReset();
 
     // By default, allow any fetch call not mocked to use the actual network.
-    fetchMock.spy();
+    fetchMock.spyGlobal();
+
+    // Support both documented (parameters.fetchMock.mocks) and legacy (parameters.mocks) usage.
+    const fetchMockParams = parameters.fetchMock || {};
+    const mocks = fetchMockParams.mocks || parameters.mocks;
+    const catchAllMocks =
+      fetchMockParams.catchAllMocks || parameters.catchAllMocks;
+    const catchAllURLs =
+      fetchMockParams.catchAllURLs || parameters.catchAllURLs;
+    const useFetchMock =
+      fetchMockParams.useFetchMock || parameters.useFetchMock;
 
     // Add all the mocks.
-    addMocks(parameters.mocks);
+    addMocks(mocks);
 
     // Do any additional configuration of fetchMock, e.g. setting
     // fetchMock.config or calling other methods.
-    if (typeof parameters.useFetchMock === 'function') {
-      parameters.useFetchMock(fetchMock);
+    if (typeof useFetchMock === 'function') {
+      useFetchMock(fetchMock);
     }
 
     // Add any catch-all mocks.
-    addMocks(parameters.catchAllMocks, 'catchAllMocks');
+    addMocks(catchAllMocks, 'catchAllMocks');
 
     // Add any catch-all urls last.
-    if (Array.isArray(parameters.catchAllURLs)) {
-      parameters.catchAllURLs.forEach((url) => {
+    if (Array.isArray(catchAllURLs)) {
+      catchAllURLs.forEach((url) => {
         fetchMock.route(
           `begin:${url}`,
           // Catch-all mocks will respond with 404 to make it easy to determine
