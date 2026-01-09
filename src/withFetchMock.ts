@@ -1,7 +1,7 @@
-import fetchMock, { type CallLog } from 'fetch-mock';
-import { makeDecorator } from 'storybook/preview-api';
-import { PARAM_KEY } from './constants';
-import type { Mock, MockArray, MockObject } from './typings';
+import fetchMock, { type CallLog } from "fetch-mock";
+import { makeDecorator } from "storybook/preview-api";
+import { PARAM_KEY } from "./constants";
+import type { Mock, MockArray, MockObject } from "./typings";
 
 /**
  * Helper function to add an array of mocks to fetch-mock.
@@ -9,10 +9,7 @@ import type { Mock, MockArray, MockObject } from './typings';
  * @param {Mock[]} mocks A list of mocks to add.
  * @param {string} parameterName The parameter the mocks are from.
  */
-function addMocks(
-  mocks: Mock[],
-  parameterName: 'mocks' | 'catchAllMocks' = 'mocks',
-) {
+function addMocks(mocks: Mock[], parameterName: "mocks" | "catchAllMocks" = "mocks") {
   if (Array.isArray(mocks)) {
     mocks.forEach((mock) => {
       // Mock defined as: [ matcher, response, options ]
@@ -29,14 +26,12 @@ function addMocks(
       }
     });
   } else if (mocks) {
-    console.warn(
-      `fetchMock.${parameterName} should be an array; ${typeof mocks} given.`,
-    );
+    console.warn(`fetchMock.${parameterName} should be an array; ${typeof mocks} given.`);
   }
 }
 
 export const withFetchMock = makeDecorator({
-  name: 'withFetchMock',
+  name: "withFetchMock",
   parameterName: PARAM_KEY,
   // TODO: If a story doesn't have any fetchMock parameters, we still need to
   //   reset fetch-mock.
@@ -52,7 +47,7 @@ export const withFetchMock = makeDecorator({
       });
 
       // Send the debug data to the console.
-      console.log({ 'fetch-mock matched these mocks': calls });
+      console.log({ "fetch-mock matched these mocks": calls });
     }
 
     // Remove any mocks from fetch-mock that may have been defined by other
@@ -65,24 +60,21 @@ export const withFetchMock = makeDecorator({
     // Support both documented (parameters.fetchMock.mocks) and legacy (parameters.mocks) usage.
     const fetchMockParams = parameters.fetchMock || {};
     const mocks = fetchMockParams.mocks || parameters.mocks;
-    const catchAllMocks =
-      fetchMockParams.catchAllMocks || parameters.catchAllMocks;
-    const catchAllURLs =
-      fetchMockParams.catchAllURLs || parameters.catchAllURLs;
-    const useFetchMock =
-      fetchMockParams.useFetchMock || parameters.useFetchMock;
+    const catchAllMocks = fetchMockParams.catchAllMocks || parameters.catchAllMocks;
+    const catchAllURLs = fetchMockParams.catchAllURLs || parameters.catchAllURLs;
+    const useFetchMock = fetchMockParams.useFetchMock || parameters.useFetchMock;
 
     // Add all the mocks.
     addMocks(mocks);
 
     // Do any additional configuration of fetchMock, e.g. setting
     // fetchMock.config or calling other methods.
-    if (typeof useFetchMock === 'function') {
+    if (typeof useFetchMock === "function") {
       useFetchMock(fetchMock);
     }
 
     // Add any catch-all mocks.
-    addMocks(catchAllMocks, 'catchAllMocks');
+    addMocks(catchAllMocks, "catchAllMocks");
 
     // Add any catch-all urls last.
     if (Array.isArray(catchAllURLs)) {

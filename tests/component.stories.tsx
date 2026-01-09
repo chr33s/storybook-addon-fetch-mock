@@ -1,11 +1,11 @@
-import { expect } from 'storybook/test';
-import { Component } from './component';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from "storybook/test";
+import { Component } from "./component";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
-  title: 'Component',
+  title: "Component",
   component: Component,
-  parameters: { layout: 'centered' },
+  parameters: { layout: "centered" },
 } satisfies Meta<typeof Component>;
 export default meta;
 
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   play: async ({ canvas }) => {
     await new Promise((resolve) => setTimeout(resolve, 100));
-    await expect(canvas.getByText('Error fetching data')).toBeInTheDocument();
+    await expect(canvas.getByText("Error fetching data")).toBeInTheDocument();
   },
 };
 
@@ -23,9 +23,9 @@ export const Mock: Story = {
     fetchMock: {
       mocks: [
         {
-          matcher: { url: 'http://localhost' },
+          matcher: { url: "http://localhost" },
           response: {
-            body: 'Fetch mocked',
+            body: "Fetch mocked",
             status: 200,
           },
         },
@@ -33,6 +33,6 @@ export const Mock: Story = {
     },
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Fetch mocked')).toBeInTheDocument();
+    await expect(canvas.getByText("Fetch mocked")).toBeInTheDocument();
   },
 };

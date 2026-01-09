@@ -1,4 +1,4 @@
-import type { RouteMatcher, RouteResponse, UserRouteConfig } from 'fetch-mock';
+import type { RouteMatcher, RouteResponse, UserRouteConfig } from "fetch-mock";
 
 export interface MockObject {
   matcher: RouteMatcher;
